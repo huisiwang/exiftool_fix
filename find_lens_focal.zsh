@@ -103,8 +103,8 @@ function look_for_all() {
   echo "Scanning all images in $(realpath "$input_path") ..."
   timestamp=$(date '+%Y-%m-%d %H:%M:%S')
 
-  # 找到所有符合條件的資料夾（是否遞歸由 use_recursive 控制）
-  if $use_recursive; then
+  # 找到所有符合條件的資料夾（是否遞歸由 recursive 控制）
+  if $recursive; then
     folders=($(find "$input_path" -type f \( -iname "*.nef" -o -iname "*.dng" -o -iname "*.cr2" \) -exec dirname {} \; | sort -u))
   else
     folders=($(find "$input_path" -maxdepth 1 -type f \( -iname "*.nef" -o -iname "*.dng" -o -iname "*.cr2" \) -exec dirname {} \; | sort -u))
