@@ -105,11 +105,11 @@ function look_for_all() {
 
   # 找到所有符合條件的資料夾（是否遞歸由 recursive 控制）
   if $recursive; then
-    folders=($(find "$input_path" -type f \( -iname "*.nef" -o -iname "*.dng" -o -iname "*.cr2" \) -exec dirname {} \; | sort -u))
+    folders=("${(@f)$(find "$input_path" -type f \( -iname "*.nef" -o -iname "*.dng" -o -iname "*.cr2" \) -exec dirname {} \; | sort -u)}")
   else
-    folders=($(find "$input_path" -maxdepth 1 -type f \( -iname "*.nef" -o -iname "*.dng" -o -iname "*.cr2" \) -exec dirname {} \; | sort -u))
+    folders=("${(@f)$(find "$input_path" -maxdepth 1 -type f \( -iname "*.nef" -o -iname "*.dng" -o -iname "*.cr2" \) -exec dirname {} \; | sort -u)}")
   fi
-
+  
   # 建立鏡頭 -> 資料夾 -> 張數 的結構
   typeset -A lens_folder_map
 
