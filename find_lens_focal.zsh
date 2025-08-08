@@ -1,5 +1,5 @@
 #!/bin/zsh
-# v1.1
+# v1.2
 # 功能：
 #  - 支援命令列參數 --focal=焦距(可多個逗號或空格分隔)，
 #    例如 --focal=28mm,50mm 或 --focal="28mm 50mm"
@@ -100,33 +100,64 @@ function look_for() {
 }
 
 function look_for_all() {
-  echo "Scanning all images in $(realpath "$input_path") and classifying by lens name..."
-  typeset -A focal_map
+  echo "Scanning all images in $(realpath "$input_path") ..."
+  timestamp=$(date '+%Y-%m-%d %H:%M:%S')
 
-  files=($( "${find_cmd[@]}" ))
-  if [[ ${#files[@]} -eq 0 ]]; then
-    echo "沒有找到任何符合條件的檔案。"
+  # 找到所有符合條件的資料夾（是否遞歸由 use_recursive 控制）
+  if $use_recursive; then
+    folders=($(find "$input_path" -type f \( -iname "*.nef" -o -iname "*.dng" -o -iname "*.cr2" \) -exec dirname {} \; | sort -u))
+  else
+    folders=($(find "$input_path" -maxdepth 1 -type f \( -iname "*.nef" -o -iname "*.dng" -o -iname "*.cr2" \) -exec dirname {} \; | sort -u))
+  fi
+
+  # 建立鏡頭 -> 資料夾 -> 張數 的結構
+  typeset -A lens_folder_map
+
+  for folder in "${folders[@]}"; do
+    while IFS= read -r line; do
+      # line 格式："Lens Name" /full/path/to/image.ext
+      lens=$(echo "$line" | sed -E 's/^"([^"]+)" .*/\1/')
+      [[ -z "$lens" || "$lens" == "Unknown" ]] && continue
+
+      key="$lens|||$folder"
+      ((lens_folder_map[$key]++))
+    done < <(exiftool -ext nef -ext dng -ext cr2 -Lens -T "$folder" 2>/dev/null)
+  done
+
+  if [[ ${#lens_folder_map[@]} -eq 0 ]]; then
+    echo "No images found."
+    echo "$timestamp No images found in $(realpath "$input_path")" >> "$log_file"
     return
   fi
 
-  for file in "${files[@]}"; do
-    lens=$(exiftool -s3 -Lens "$file" 2>/dev/null)
-    if [[ -z "$lens" ]]; then
-      lens="Unknown"
+  echo ""
+  echo "掃描結果："
+  echo ""
+
+  # 整理出所有鏡頭
+  lenses=()
+  for key in "${(@k)lens_folder_map}"; do
+    lens="${key%%|||*}"
+    if [[ -z ${(M)lenses:#$lens} ]]; then
+      lenses+=("$lens")
     fi
-    (( focal_map[$lens]++ ))
   done
 
-  echo "掃描結果："
-  for key in "${(@k)focal_map}"; do
-    echo "$key : ${focal_map[$key]} files"
-  done | sort
-
-  timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-  echo "" >> "$log_file"
-  for key in "${(@k)focal_map}"; do
-    echo "$timestamp Looking for images with [$key] lens in $(realpath "$input_path") (all mode)" >> "$log_file"
-    echo "${focal_map[$key]} images found in	$(realpath "$input_path")" >> "$log_file"
+  for lens in "${lenses[@]}"; do
+    echo "鏡頭：$lens"
+    echo "$timestamp Looking for images with [$lens] lens in $(realpath "$input_path")" >> "$log_file"
+    
+    for key in "${(@k)lens_folder_map}"; do
+      this_lens="${key%%|||*}"
+      folder="${key##*|||}"
+      count="${lens_folder_map[$key]}"
+      
+      if [[ "$this_lens" == "$lens" ]]; then
+        echo "  $count images found in\t$folder"
+        echo "$count images found in\t$folder" >> "$log_file"
+      fi
+    done
+    echo ""
     echo "" >> "$log_file"
   done
 }
