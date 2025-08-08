@@ -1,14 +1,14 @@
 #!/bin/zsh
 
 # ========================================
-# fix_dng_metadata.zsh
+# fix_dng_metadata.zsh v1.1
 # 功能說明：
 # 1. 使用 exiftool 修改 DNG (大小寫兼容) 檔案的 EXIF 資訊
 # 2. 移除機內自動轉接環校正資料：清空 OpcodeList3
 # 3. 可選擇是否同時移除暗角校正（OpcodeList2）
 # 4. 根據檔案中原有的 LensSpec，套用鏡頭資訊（lens, lens_info, DNGLensInfo, lens_model）
 # 5. 強制設定 lens_make 為 "Zeiss"
-# 6. 可指定處理整個目錄，或單獨指定檔案
+# 6. 可指定處理整個目錄，或單獨指定檔案或目錄
 # 7. 提供 verbose 模式以顯示詳細處理資訊
 # 8. 統計成功與失敗的處理結果
 # ========================================
@@ -32,7 +32,11 @@ fail_count=0
 # 處理參數
 args=()
 for arg in "$@"; do
+  dir=""
   case $arg in
+    --dir=*)
+      dir="${arg#*=}"
+      ;;
     --remove-vignette)
       REMOVE_OPCODE2=true
       ;;
@@ -157,4 +161,3 @@ done
 echo ""
 echo "✅ 成功處理：$success_count 個檔案"
 echo "❌ 處理失敗或略過：$fail_count 個檔案"
-
