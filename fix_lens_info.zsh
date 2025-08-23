@@ -1,6 +1,7 @@
 #!/bin/zsh
 #
 # fix_lens_info.zsh
+# v1.1
 
 # 此腳本用於批量修改 .cr2, .nef, .dng (大小寫兼容) 文件的 EXIF 資訊
 # 1. 可透過 --lens_name 指定鏡頭型號，匹配對應資料寫入 EXIF
@@ -72,6 +73,48 @@ fi
 
 # 根據 lens_name 決定寫入哪些資訊
 case "$lens_name" in
+  G21)
+    lens="21mm f/2.8"
+    lens_info="21mm f/2.8"
+    dng_lens_info="21mm f/2.8"
+    lens_model="Contax G 21mm f/2.8"
+    lens_make="Zeiss"
+    ;;
+  G28)
+    lens="28mm f/2.8"
+    lens_info="28mm f/2.8"
+    dng_lens_info="28mm f/2.8"
+    lens_model="Contax G 28mm f/2.8"
+    lens_make="Zeiss"
+    ;;
+  G35)
+    lens="35mm f/2.0"
+    lens_info="35mm f/2.0"
+    dng_lens_info="35mm f/2.0"
+    lens_model="Contax G 35mm f/2.0"
+    lens_make="Zeiss"
+    ;;
+  G45)
+    lens="45mm f/2.0"
+    lens_info="45mm f/2.0"
+    dng_lens_info="45mm f/2.0"
+    lens_model="Contax G 45mm f/2.0"
+    lens_make="Zeiss"
+    ;;
+  G90)
+    lens="90mm f/2.8"
+    lens_info="90mm f/2.8"
+    dng_lens_info="90mm f/2.8"
+    lens_model="Contax G 90mm f/2.8"
+    lens_make="Zeiss"
+    ;;
+  Summitar)
+    lens="50mm f/2.0"
+    lens_info="50mm f/2.0"
+    dng_lens_info="50mm f/2.0"
+    lens_model="Summitar 50mm f/2.0"
+    lens_make="Leica"
+    ;;
   *40mm*)
     lens="40mm f/2.0"
     lens_info="40mm f/2.0"
