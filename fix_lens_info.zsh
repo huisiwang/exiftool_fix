@@ -129,6 +129,20 @@ case "$lens_name" in
     lens_model="Nikkor AI-S 50mm f/1.8"
     lens_make="Nikon"
     ;;
+  *Pentax50M*)
+    lens="50mm f/1.7"
+    lens_info="50mm f/1.7"
+    dng_lens_info="50mm f/1.7"
+    lens_model="SMC Pentax-M 50mm f/1.7"
+    lens_make="Pentax"
+    ;;
+  *Pentax55K*)
+    lens="55mm f/1.8"
+    lens_info="55mm f/1.8"
+    dng_lens_info="55mm f/1.8"
+    lens_model="SMC Pentax 55mm f/1.8"
+    lens_make="Pentax"
+    ;;
   *)
     echo "錯誤：未知的 lens_name 類型：$lens_name"
     exit 1
