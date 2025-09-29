@@ -1,7 +1,7 @@
 #!/bin/zsh
 #
 # fix_lens_info.zsh
-# v1.1
+# v1.1.1
 
 # 此腳本用於批量修改 .cr2, .nef, .dng (大小寫兼容) 文件的 EXIF 資訊
 # 1. 可透過 --lens_name 指定鏡頭型號，匹配對應資料寫入 EXIF
@@ -134,14 +134,14 @@ case "$lens_name" in
     lens_info="50mm f/1.7"
     dng_lens_info="50mm f/1.7"
     lens_model="SMC Pentax-M 50mm f/1.7"
-    lens_make="Pentax"
+    lens_make="Asahi Opt. Co.,"
     ;;
   *Pentax55K*)
     lens="55mm f/1.8"
     lens_info="55mm f/1.8"
     dng_lens_info="55mm f/1.8"
     lens_model="SMC Pentax 55mm f/1.8"
-    lens_make="Pentax"
+    lens_make="Asahi Opt. Co.,"
     ;;
   *)
     echo "錯誤：未知的 lens_name 類型：$lens_name"
