@@ -1,7 +1,7 @@
 #!/bin/zsh
 #
 # fix_lens_info.zsh
-# v1.1.2
+# v1.1.3
 
 # 此腳本用於批量修改 .cr2, .nef, .dng (大小寫兼容) 文件的 EXIF 資訊
 # 1. 可透過 --lens_name 指定鏡頭型號，匹配對應資料寫入 EXIF
@@ -74,80 +74,80 @@ fi
 # 根據 lens_name 決定寫入哪些資訊
 case "$lens_name" in
   G21)
-    lens="21mm f/2.8"
+    lens="Contax G 21mm f/2.8"
     lens_info="21mm f/2.8"
     dng_lens_info="21mm f/2.8"
-    lens_model="Contax G 21mm f/2.8"
+    lens_focal_length="21"
     lens_make="Zeiss"
     ;;
   G28)
-    lens="28mm f/2.8"
+    lens="Contax G 28mm f/2.8"
     lens_info="28mm f/2.8"
     dng_lens_info="28mm f/2.8"
-    lens_model="Contax G 28mm f/2.8"
+    lens_focal_length="28"
     lens_make="Zeiss"
     ;;
   G35)
-    lens="35mm f/2.0"
+    lens="Contax G 35mm f/2.0"
     lens_info="35mm f/2.0"
     dng_lens_info="35mm f/2.0"
-    lens_model="Contax G 35mm f/2.0"
+    lens_focal_length="35"
     lens_make="Zeiss"
     ;;
   G45)
-    lens="45mm f/2.0"
+    lens="Contax G 45mm f/2.0"
     lens_info="45mm f/2.0"
     dng_lens_info="45mm f/2.0"
-    lens_model="Contax G 45mm f/2.0"
+    lens_focal_length="45"
     lens_make="Zeiss"
     ;;
   G90)
-    lens="90mm f/2.8"
+    lens="Contax G 90mm f/2.8"
     lens_info="90mm f/2.8"
     dng_lens_info="90mm f/2.8"
-    lens_model="Contax G 90mm f/2.8"
+    lens_focal_length="90"
     lens_make="Zeiss"
     ;;
   Summitar)
-    lens="50mm f/2.0"
+    lens="Summitar 50mm f/2.0"
     lens_info="50mm f/2.0"
     dng_lens_info="50mm f/2.0"
-    lens_model="Summitar 50mm f/2.0"
+    lens_focal_length="50"
     lens_make="Leica"
     ;;
   *40mm*)
-    lens="40mm f/2.0"
+    lens="Minolta M-Rokkor 40mm f/2.0"
     lens_info="40mm f/2.0"
     dng_lens_info="40mm f/2.0"
-    lens_model="Minolta M-Rokkor 40mm f/2.0"
+    lens_focal_length="40"
     lens_make="Minolta"
     ;;
   *50AIS*)
-    lens="50mm f/1.8"
+    lens="Nikkor AI-S 50mm f/1.8"
     lens_info="50mm f/1.8"
     dng_lens_info="50mm f/1.8"
-    lens_model="Nikkor AI-S 50mm f/1.8"
+    lens_focal_length="50"
     lens_make="Nikon"
     ;;
   *24AIS*)
-    lens="24mm f/2.8"
+    lens="Nikkor AI-S 24mm f/2.8"
     lens_info="24mm f/2.8"
     dng_lens_info="24mm f/2.8"
-    lens_model="Nikkor AI-S 24mm f/2.8"
+    lens_focal_length="24"
     lens_make="Nikon"
     ;;
   *Pentax50M*)
-    lens="50mm f/1.7"
+    lens="SMC Pentax-M 50mm f/1.7"
     lens_info="50mm f/1.7"
     dng_lens_info="50mm f/1.7"
-    lens_model="SMC Pentax-M 50mm f/1.7"
+    lens_focal_length="50"
     lens_make="Asahi Opt. Co.,"
     ;;
   *Pentax55K*)
-    lens="55mm f/1.8"
+    lens="SMC Pentax 55mm f/1.8"
     lens_info="55mm f/1.8"
     dng_lens_info="55mm f/1.8"
-    lens_model="SMC Pentax 55mm f/1.8"
+    lens_focal_length="55"
     lens_make="Asahi Opt. Co.,"
     ;;
   *)
@@ -186,6 +186,7 @@ for file in "$files[@]"; do
     echo "    DNGLensInfo:    $dng_lens_info"
     echo "    LensModel:      $lens_model"
     echo "    LensMake:       $lens_make"
+    echo "    FocalLength:    $lens_focal_length"
   else
     echo "處理檔案：$file"
   fi
@@ -194,8 +195,9 @@ for file in "$files[@]"; do
     -overwrite_original
     -Lens="$lens"
     -LensInfo="$lens_info"
-    -LensModel="$lens_model"
+    -LensModel="$lens"
     -LensMake="$lens_make"
+    -FocalLength="$lens_focal_length"
   )
 
   # 如果是 .dng 副檔名（大小寫兼容），加入 DNGLensInfo
