@@ -1,7 +1,7 @@
 #!/bin/zsh
 #
 # fix_lens_info.zsh
-# v1.1.3
+# v1.1.4
 
 # 此腳本用於批量修改 .cr2, .nef, .dng (大小寫兼容) 文件的 EXIF 資訊
 # 1. 可透過 --lens_name 指定鏡頭型號，匹配對應資料寫入 EXIF
@@ -184,7 +184,6 @@ for file in "$files[@]"; do
     echo "    Lens:           $lens"
     echo "    LensInfo:       $lens_info"
     echo "    DNGLensInfo:    $dng_lens_info"
-    echo "    LensModel:      $lens_model"
     echo "    LensMake:       $lens_make"
     echo "    FocalLength:    $lens_focal_length"
   else
