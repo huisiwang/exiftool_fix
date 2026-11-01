@@ -1,8 +1,8 @@
 #!/bin/zsh
 #
 # fix_lens_info.zsh
-# v1.1.6
-# 20261005
+# v1.1.7
+# 20261101
 
 # 此腳本用於批量修改 .cr2, .nef, .dng (大小寫兼容) 文件的 EXIF 資訊
 # 1. 可透過 --lens_name 指定鏡頭型號，匹配對應資料寫入 EXIF
@@ -116,56 +116,56 @@ case "$lens_name" in
     lens_focal_length="50"
     lens_make="Leica"
     ;;
-  *40mm*)
+  M40)
     lens="Minolta M-Rokkor 40mm f/2.0"
     lens_info="40mm f/2.0"
     dng_lens_info="40mm f/2.0"
     lens_focal_length="40"
     lens_make="Minolta"
     ;;
-  *24AIS*)
+  N24AIS)
     lens="Nikkor AI-S 24mm f/2.8"
     lens_info="24mm f/2.8"
     dng_lens_info="24mm f/2.8"
     lens_focal_length="24"
     lens_make="Nikon"
     ;;
-  *50AI*)
+  N50AI)
     lens="Nikkor AI 50mm f/1.8"
     lens_info="50mm f/1.8"
     dng_lens_info="50mm f/1.8"
     lens_focal_length="50"
     lens_make="Nikon"
     ;;
-  *135AIS*)
+  N135AIS)
     lens="Nikkor AI-S 135mm f/2.8"
     lens_info="135mm f/2.8"
     dng_lens_info="135mm f/2.8"
     lens_focal_length="135"
     lens_make="Nikon"
     ;;
-  *Pentax28M*)
+  P28M)
     lens="SMC Pentax-M 28mm f/3.5"
     lens_info="28mm f/3.5"
     dng_lens_info="28mm f/3.5"
     lens_focal_length="28"
     lens_make="Asahi Opt. Co.,"
     ;;
-  *Pentax50M*)
+  P50M)
     lens="SMC Pentax-M 50mm f/1.7"
     lens_info="50mm f/1.7"
     dng_lens_info="50mm f/1.7"
     lens_focal_length="50"
     lens_make="Asahi Opt. Co.,"
     ;;
-  *Pentax55K*)
+  P55K)
     lens="SMC Pentax 55mm f/1.8"
     lens_info="55mm f/1.8"
     dng_lens_info="55mm f/1.8"
     lens_focal_length="55"
     lens_make="Asahi Opt. Co.,"
     ;;
-  *Pentax135M*)
+  P135M)
     lens="SMC Pentax 135mm f/3.5"
     lens_info="135mm f/3.5"
     dng_lens_info="135mm f/3.5"
